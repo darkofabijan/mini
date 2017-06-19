@@ -1,0 +1,33 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: mini
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: mini
+    spec:
+      containers:
+      - name: mini
+        image: darkofabijan/mini:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 4567
+        env:
+          - name: your_name
+            value: "Peppa 🐷 "
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mini
+spec:
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 4567
+      targetPort: 4567
+  selector:
+    app: mini
